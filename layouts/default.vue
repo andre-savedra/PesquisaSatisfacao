@@ -36,60 +36,35 @@
         class="default-sidebar p-sidebar-md"
       >
         <div class="p-d-flex p-flex-column p-jc-center p-ai-center">
-          <p class="p-text-center default-sidebar-text">Recuar</p>
-          <Button            
-            icon="pi pi-arrow-circle-left"
-            iconPos="right"
-            class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
-            @click="checkSideBarVisibility"
-          />
-          <p class="p-text-center default-sidebar-text">Home</p>
-          <Button
-            el="0"
-            icon="pi pi-home"
-            iconPos="right"
-            class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
-            @click="checkSecondSideBarVisibility"
-          />
-          <p class="p-text-center default-sidebar-text">Formulário</p>
-          <Button
-            el="1"
-            icon="pi pi-book"
-            iconPos="right"
-            class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
-            @click="checkSecondSideBarVisibility"
-          />
-          <p class="p-text-center default-sidebar-text" v-if="admin_user">
-            Painel
-          </p>
-          <Button
-            el="2"
-            v-if="admin_user"
-            icon="pi pi-chart-line"
-            iconPos="right"
-            class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
-            @click="checkSecondSideBarVisibility"
-          />
-          <p class="p-text-center default-sidebar-text">Logout</p>
-          <Button
-            el="4"
-            icon="pi pi-sign-out"
-            iconPos="right"
-            class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
-          />
+          <div
+            v-for="(btn, index) in sidebarMenuButtons"
+            :key="index"
+            class="p-d-flex p-flex-column p-jc-center p-ai-center"
+          >
+            <p class="p-text-center default-sidebar-text">{{ btn.textLabel }}</p>
+            <Button
+              :el="index"
+              :icon="btn.iconBtn"
+              iconPos="right"
+              class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
+              :v-if="btn.showButton"
+              @click="checkSecondSideBarVisibility"
+            />
+          </div>
+          
         </div>
       </Sidebar>
 
       <Sidebar
-        v-for="(second_sidebar, index) in visibleLeftMenu" :key="index"
-        :visible.sync="visibleLeftMenu[index].show"
+        v-for="(second_sidebar, index) in sidebarMenuButtons"
+        :key="index"
+        :visible.sync="sidebarMenuButtons[index].showSidebar"
         :dismissable="false"
         :baseZIndex="900"
         :showCloseIcon="false"
-        :class="'default-second-sidebar-'+ index +' p-sidebar-md'"        
+        :class="'default-second-sidebar-' + index + ' p-sidebar-md'"
       >
       </Sidebar>
-      
     </div>
     <Nuxt />
   </div>
@@ -101,21 +76,41 @@ export default {
   data() {
     return {
       visibleLeft: false,
-      visibleLeftMenu: [
+      sidebarMenuButtons: [
         {
-          show: false,
+          textLabel: "Recuar",
+          iconBtn: "pi pi-arrow-circle-left",
+          showButton: true,
+          showSidebar: false,
+          hasSidebar: false,
         },
         {
-          show: false,
+          textLabel: "Home",
+          iconBtn: "pi pi-home",
+          showButton: true,
+          showSidebar: false,
+          hasSidebar: false,
         },
         {
-          show: false,
+          textLabel: "Formulário",
+          iconBtn: "pi pi-book",
+          showButton: true,
+          showSidebar: false,
+          hasSidebar: true,
         },
         {
-          show: false,
+          textLabel: "Painel",
+          iconBtn: "pi pi-chart-line",
+          showButton: this.admin_user,
+          showSidebar: false,
+          hasSidebar: true,
         },
         {
-          show: false,
+          textLabel: "Logout",
+          iconBtn: "pi pi-sign-out",
+          showButton: true,
+          showSidebar: false,
+          hasSidebar: false,
         },
       ],
       actualUser: null,
@@ -134,22 +129,51 @@ export default {
     });
   },
   methods: {
-    resetLeftMenu(){
-      for (let i = 0; i < this.visibleLeftMenu.length; i++) {
-          this.visibleLeftMenu[i].show = false;
-        }
+    resetSidebarMenu() {
+      for (let i = 0; i < this.sidebarMenuButtons.length; i++) {
+        this.sidebarMenuButtons[i].showSidebar = false;
+      }
     },
     checkSideBarVisibility() {
       this.visibleLeft = !this.visibleLeft;
 
       if (this.visibleLeft === false) {
-        this.resetLeftMenu();
+        this.resetSidebarMenu();
       }
     },
     checkSecondSideBarVisibility(element) {
-      const btn = element.target.parentElement.getAttribute("el");
-      this.resetLeftMenu();
-      this.visibleLeftMenu[btn].show = !this.visibleLeftMenu[btn].show;
+      let buttonNumber = parseInt(element.target.parentElement.getAttribute("el"));
+     
+      //show or hide sidebars
+      if (this.sidebarMenuButtons[buttonNumber].hasSidebar === true) {
+
+        if(this.sidebarMenuButtons[buttonNumber].showSidebar === false)
+        {
+          this.resetSidebarMenu();
+          this.sidebarMenuButtons[buttonNumber].showSidebar = true;
+        }
+        else
+        {
+          this.resetSidebarMenu();
+        }        
+      }
+      
+      //logicall to each button      
+      switch (buttonNumber) {
+        //button 0
+        case 0:
+          this.checkSideBarVisibility();
+          break;
+        //button 1
+        case 1:
+          alert("Home...");
+          break;
+        //button 4
+        case 4:
+          alert("Logout...");
+          break;
+      }
+
     },
   },
 };
@@ -158,7 +182,7 @@ export default {
 <style lang="scss">
 @import "@/layouts/scss/reset.scss";
 
-$sidebar_second_positions: 150px, 220px, 290px, 350px;
+$sidebar_second_positions: 150px, 220px, 220px, 300px;
 
 .default-main {
   width: 100vw;
