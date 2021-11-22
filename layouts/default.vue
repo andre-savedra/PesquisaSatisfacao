@@ -21,7 +21,7 @@
         class="default-header-right p-d-flex p-flex-row p-jc-end p-ai-center"
       >
         <Profile
-          v-if="actualUser !== null"
+          v-if="profileLoaded"
           :user="actualUser"
           text_color="white"
           back_color="#313131"
@@ -41,17 +41,19 @@
             :key="index"
             class="p-d-flex p-flex-column p-jc-center p-ai-center"
           >
-            <p class="p-text-center default-sidebar-text">{{ btn.textLabel }}</p>
+          <!-- btn.showButton -->
+            <p v-if="btn.showButton" class="p-text-center default-sidebar-text">
+              {{ btn.textLabel }}
+            </p>
             <Button
+              v-if="btn.showButton"
               :el="index"
               :icon="btn.iconBtn"
               iconPos="right"
               class="default-sidebar-btn p-mb-2 p-button-danger p-button-text"
-              :v-if="btn.showButton"
               @click="checkSecondSideBarVisibility"
             />
           </div>
-          
         </div>
       </Sidebar>
 
@@ -81,60 +83,110 @@ export default {
           textLabel: "Recuar",
           iconBtn: "pi pi-arrow-circle-left",
           showButton: true,
+          adminButton: false,
           showSidebar: false,
           hasSidebar: false,
+          // sideButtons: [],
         },
         {
           textLabel: "Home",
           iconBtn: "pi pi-home",
           showButton: true,
+          adminButton: false,
           showSidebar: false,
           hasSidebar: false,
+          // sideButtons: [],
         },
         {
           textLabel: "Formulário",
           iconBtn: "pi pi-book",
           showButton: true,
+          adminButton: false,
           showSidebar: false,
           hasSidebar: true,
+          // sideButtons: [
+          //   {
+          //     textLabel: "Início",
+          //     method: this.formButton_Start()
+          //   },
+          //   {
+          //     textLabel: "Responder",
+          //     method: this.formButton_Answer()
+          //   },
+          //   {
+          //     textLabel: "Enviado",
+          //     method: this.formButton_Sent()
+          //   }
+          // ]
         },
         {
           textLabel: "Painel",
           iconBtn: "pi pi-chart-line",
-          showButton: this.admin_user,
+          showButton: this.$store.state.user.admin,
+          adminButton: true,
           showSidebar: false,
           hasSidebar: true,
+        //   sideButtons: [
+        //     {
+        //       textLabel: "Início",
+        //       method: this.formButton_Start()
+        //     },
+        //     {
+        //       textLabel: "Responder",
+        //       method: this.formButton_Answer()
+        //     },
+        //     {
+        //       textLabel: "Enviado",
+        //       method: this.formButton_Sent()
+        //     }
+        //   ]
         },
         {
           textLabel: "Logout",
           iconBtn: "pi pi-sign-out",
           showButton: true,
+          adminButton: false,
           showSidebar: false,
           hasSidebar: false,
         },
       ],
       actualUser: null,
-      admin_user: false,
+      profileLoaded: false,
+      actual_admin: false
     };
   },
   mounted() {
     this.$store.dispatch("user/getUser").then((response) => {
       this.actualUser = response[0];
-      console.log("actualUser");
-      console.log(this.actualUser);
-
-      if (this.actualUser.firstname === "André") {
-        this.admin_user = true;
-      }
+      this.actual_admin = this.actualUser.admin;
+      this.$store.dispatch("user/setAdmin", this.actual_admin);
+      
+      this.reloadButtons();
+      // console.log("vuex", this.$store.state.user.admin);
+      // console.log("actual_admin",this.actual_admin);
+      this.profileLoaded = true;
     });
+    this.$store.dispatch("user/getDjangoUser");
   },
   methods: {
+    reloadButtons(){
+      console.log("reloading buttons....")
+      for(let i=0; i < this.sidebarMenuButtons.length; i++)
+      {
+        if(this.sidebarMenuButtons[i].adminButton == true)
+        {
+          this.sidebarMenuButtons[i].showButton = this.$store.state.user.admin;
+        }
+      }
+    },
     resetSidebarMenu() {
       for (let i = 0; i < this.sidebarMenuButtons.length; i++) {
         this.sidebarMenuButtons[i].showSidebar = false;
       }
     },
     checkSideBarVisibility() {
+      // console.log("s");
+      // console.log(this.$store.state.user.admin);
       this.visibleLeft = !this.visibleLeft;
 
       if (this.visibleLeft === false) {
@@ -142,23 +194,21 @@ export default {
       }
     },
     checkSecondSideBarVisibility(element) {
-      let buttonNumber = parseInt(element.target.parentElement.getAttribute("el"));
-     
-      //show or hide sidebars
-      if (this.sidebarMenuButtons[buttonNumber].hasSidebar === true) {
+      const el = element.target;
+      let buttonNumber = parseInt(el.parentElement.getAttribute("el"));
 
-        if(this.sidebarMenuButtons[buttonNumber].showSidebar === false)
-        {
+      if (isNaN(buttonNumber)) buttonNumber = parseInt(el.getAttribute("el"));
+
+      if (this.sidebarMenuButtons[buttonNumber].hasSidebar == true) {
+        if (this.sidebarMenuButtons[buttonNumber].showSidebar == false) {
           this.resetSidebarMenu();
           this.sidebarMenuButtons[buttonNumber].showSidebar = true;
-        }
-        else
-        {
+        } else {
           this.resetSidebarMenu();
-        }        
+        }
       }
-      
-      //logicall to each button      
+
+      //logicall to each button
       switch (buttonNumber) {
         //button 0
         case 0:
@@ -167,13 +217,15 @@ export default {
         //button 1
         case 1:
           alert("Home...");
+          this.resetSidebarMenu();
           break;
+        
         //button 4
         case 4:
           alert("Logout...");
+          this.resetSidebarMenu();
           break;
       }
-
     },
   },
 };

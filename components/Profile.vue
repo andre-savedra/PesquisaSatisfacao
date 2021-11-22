@@ -3,7 +3,7 @@
     class="profile-main p-d-flex p-flex-row p-jc-start p-ai-center p-pl-2"
     :style="cssCustom"
   >
-    <div class="profile-btn flex-row" v-on:click="testando">
+    <div class="profile-btn flex-row">
       <Avatar :image="componentUser.img" size="xlarge" shape="circle" />
     </div>
 
@@ -13,7 +13,6 @@
 
     <button
       class="normal-dark-btn pi pi-angle-down arrow-btn p-mr-2 p-ml-3"
-      v-on:click="testando"
     ></button>
   </div>
 </template>
@@ -36,9 +35,7 @@ export default {
     },
   },
   methods: {
-    testando() {
-      alert("ok");
-    },
+    
   },
 };
 </script>
