@@ -38,8 +38,8 @@ export default {
         theme: 'saga-blue',
         ripple: true,
         components: [
-            'Button', 'Sidebar', 'Avatar', 'TieredMenu'
-        ],
+            'Button', 'Sidebar', 'Avatar', 'TieredMenu', 'Chart', 'Dropdown', 'Tooltip'
+        ]
     },
 
     googleFonts: {
