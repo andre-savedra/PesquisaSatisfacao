@@ -35,7 +35,7 @@
         :showCloseIcon="false"
         class="default-sidebar p-sidebar-md"
       >
-        <div class="p-d-flex p-flex-column p-jc-center p-ai-center">
+        <div class="p-d-flex p-flex-column p-jc-center p-ai-center btnsidecontainer">
           <div
             v-for="(btn, index) in sidebarMenuButtons"
             :key="index"
@@ -216,9 +216,14 @@ export default {
           break;
         //button 1
         case 1:
-          alert("Home...");
-          this.resetSidebarMenu();
+          // alert("Home...");
+          this.$router.push("/");
+          this.checkSideBarVisibility();          
           break;
+
+          case 3:
+            this.$router.push("dashboards");
+            break;
         
         //button 4
         case 4:
@@ -285,6 +290,10 @@ $sidebar_second_positions: 150px, 220px, 220px, 300px;
       top: var(--height-default-header);
       color: white;
       background-color: var(--red-background-color);
+      border-radius: 0px 10px 10px 0px;
+      .p-sidebar-content{
+        padding: 0;
+      }
 
       .default-sidebar-btn {
         .p-button-icon {
@@ -326,6 +335,8 @@ $sidebar_second_positions: 150px, 220px, 220px, 300px;
     }
   } //.default-header
 }
+
+
 
 .p-component-overlay {
   background-color: rgba(0, 0, 0, 0) !important;
