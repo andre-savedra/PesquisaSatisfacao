@@ -14,7 +14,7 @@
           <p class="titulo">Bem vindo a Pesquisa</p>
           <p class="titulo">de Satisfação</p>
           <p class="legenda">Dê seu feedback sobre a escola</p>
-          <button class="btnred">Acessar Formulário</button>
+          <button class="btnred" @click="goToForm()">Acessar Formulário</button>
         </div>
 
         <img class="img" src="@/static/modelo.png" alt="" />
@@ -145,6 +145,11 @@ export default {
     window.onresize = imgResizer;
 
     imgResizer();
+  },
+  methods: {
+    goToForm(){
+      this.$router.push('formulario');
+    }
   },
 };
 </script>
