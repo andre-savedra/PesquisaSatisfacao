@@ -35,13 +35,18 @@
         :showCloseIcon="false"
         class="default-sidebar p-sidebar-md"
       >
-        <div class="p-d-flex p-flex-column p-jc-center p-ai-center btnsidecontainer">
+        <div
+          class="
+            p-d-flex p-flex-column p-jc-center p-ai-center
+            btnsidecontainer
+          "
+        >
           <div
             v-for="(btn, index) in sidebarMenuButtons"
             :key="index"
             class="p-d-flex p-flex-column p-jc-center p-ai-center"
           >
-          <!-- btn.showButton -->
+            <!-- btn.showButton -->
             <p v-if="btn.showButton" class="p-text-center default-sidebar-text">
               {{ btn.textLabel }}
             </p>
@@ -126,20 +131,20 @@ export default {
           adminButton: true,
           showSidebar: false,
           hasSidebar: true,
-        //   sideButtons: [
-        //     {
-        //       textLabel: "Início",
-        //       method: this.formButton_Start()
-        //     },
-        //     {
-        //       textLabel: "Responder",
-        //       method: this.formButton_Answer()
-        //     },
-        //     {
-        //       textLabel: "Enviado",
-        //       method: this.formButton_Sent()
-        //     }
-        //   ]
+          //   sideButtons: [
+          //     {
+          //       textLabel: "Início",
+          //       method: this.formButton_Start()
+          //     },
+          //     {
+          //       textLabel: "Responder",
+          //       method: this.formButton_Answer()
+          //     },
+          //     {
+          //       textLabel: "Enviado",
+          //       method: this.formButton_Sent()
+          //     }
+          //   ]
         },
         {
           textLabel: "Logout",
@@ -152,7 +157,7 @@ export default {
       ],
       actualUser: null,
       profileLoaded: false,
-      actual_admin: false
+      actual_admin: false,
     };
   },
   mounted() {
@@ -160,7 +165,7 @@ export default {
       this.actualUser = response[0];
       this.actual_admin = this.actualUser.admin;
       this.$store.dispatch("user/setAdmin", this.actual_admin);
-      
+
       this.reloadButtons();
       // console.log("vuex", this.$store.state.user.admin);
       // console.log("actual_admin",this.actual_admin);
@@ -169,12 +174,10 @@ export default {
     this.$store.dispatch("user/getDjangoUser");
   },
   methods: {
-    reloadButtons(){
-      console.log("reloading buttons....")
-      for(let i=0; i < this.sidebarMenuButtons.length; i++)
-      {
-        if(this.sidebarMenuButtons[i].adminButton == true)
-        {
+    reloadButtons() {
+      console.log("reloading buttons....");
+      for (let i = 0; i < this.sidebarMenuButtons.length; i++) {
+        if (this.sidebarMenuButtons[i].adminButton == true) {
           this.sidebarMenuButtons[i].showButton = this.$store.state.user.admin;
         }
       }
@@ -218,13 +221,13 @@ export default {
         case 1:
           // alert("Home...");
           this.$router.push("/");
-          this.checkSideBarVisibility();          
+          this.checkSideBarVisibility();
           break;
 
-          case 3:
-            this.$router.push("dashboards");
-            break;
-        
+        case 3:
+          this.$router.push("dashboards");
+          break;
+
         //button 4
         case 4:
           alert("Logout...");
@@ -277,8 +280,8 @@ $sidebar_second_positions: 150px, 220px, 220px, 300px;
 
     .default-header-right {
       width: 15vw;
-      min-width: 100px;
-      max-width: 200px;
+      min-width: 200px;
+      max-width: 250px;
       height: 100%;
     } //default-header-right
 
@@ -291,7 +294,7 @@ $sidebar_second_positions: 150px, 220px, 220px, 300px;
       color: white;
       background-color: var(--red-background-color);
       border-radius: 0px 10px 10px 0px;
-      .p-sidebar-content{
+      .p-sidebar-content {
         padding: 0;
       }
 
@@ -336,8 +339,6 @@ $sidebar_second_positions: 150px, 220px, 220px, 300px;
   } //.default-header
 }
 
-
-
 .p-component-overlay {
   background-color: rgba(0, 0, 0, 0) !important;
 }
@@ -374,6 +375,9 @@ $sidebar_second_positions: 150px, 220px, 220px, 300px;
   .default-main {
     .default-header {
       height: var(--height-default-header-mobile);
+      .default-header-right {
+        min-width: 100px;        
+      } //default-header-right
 
       .default-sidebar {
         height: calc(100% - var(--height-default-header-mobile));

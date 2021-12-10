@@ -45,6 +45,7 @@ export default {
   width: 95vw;
   height: 100%;
   background-color: var(--myback);
+  
 
   .profile-btn {
     width: auto;

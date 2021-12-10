@@ -94,15 +94,22 @@
               <li><a href="#">Tutorial</a></li>
               <li><a href="#">Contato</a></li>
             </ul>
-          <p>&reg;RobertoMangeSenai</p>
+            <p>&reg;RobertoMange</p>
           </li>
         </section>
-        <section class="right-right">
+        <section
+          class="
+            right-right
+            p-d-flex p-flex-column p-jc-start p-ai-center p-text-center
+          "
+        >
           <li class="contato">
-            <p class="titulo">E-mail</p>
-            <p class="dados">secretariaonline@senai.com.br</p>
-            <p class="titulo">Fone</p>
-            <p class="dados">(19) 3655-2494</p>
+            <h6 class="titulo">E-mail:</h6>
+            <a class="dados" href="mailto:senaicampinas@sp.senai.br"
+              >senaicampinas@sp.senai.br</a
+            >
+            <h6 class="titulo">Fone:</h6>
+            <a class="dados" href="tel:+551937721840">(19) 3772-1840</a>
           </li>
         </section>
       </section>
@@ -252,27 +259,12 @@ export default {
     width: 100%;
     background-color: #0e0e0f;
 
-    // #linha {
-    //   height: 10px;
-    //   width: 100%;
-    //   background-color: #c22a1f;
-    // }
-
-    // #text_socials {
-    //   text-align: center;
-    //   margin-right: 600px;
-    //   font-size: 12px;
-    // }
-
     .footer-left {
       width: 35%;
       height: 100%;
       overflow-y: hidden;
-      // padding: 15px;
-      // float: left;
 
       .socials {
-        // background-color: aquamarine;
         width: 50%;
         max-width: 350px;
         .icons {
@@ -320,7 +312,7 @@ export default {
         // background-color: red;
 
         .paginas {
-          padding: 25px;
+          padding: 20px 0px 0px 0px;
           // background-color: yellow;
           width: auto;
           .titulo {
@@ -334,6 +326,10 @@ export default {
             font-size: 18px;
             color: grey;
           }
+
+          p {
+            margin-top: 55px;
+          }
         }
       }
 
@@ -341,10 +337,24 @@ export default {
         width: 50%;
         height: 100%;
         // float: right;
+        // background-color: #f33ff3;
 
-        .dados {
-          font-size: 20px;
-          color: grey;
+        .contato {
+          padding: 20px 0px 0px 0px;
+
+          .titulo {
+            font-size: 28px;
+            margin: 8px 0;
+            // background-color: blue;
+          }
+          .dados {
+            font-size: 20px;
+            color: grey;
+
+            &:hover {
+              color: white;
+            }
+          }
         }
       }
     }
@@ -415,6 +425,53 @@ export default {
         }
       }
     }
+
+    .footer {
+      height: 207px;
+      .footer-left {
+        #text_socials {
+          font-size: 15px;
+        }
+        .socials {
+          width: 58%;
+          .icons {
+            height: 35px;
+          }
+        }
+
+        .img-logo {
+          --alturaImg: 45px;
+          margin-bottom: 28px;
+        }
+      }
+
+      .footer-right {
+        .right-left {
+          width: 45%;
+          .paginas {
+            .titulo {
+              font-size: 25px;
+            }
+
+            .box {
+              font-size: 16px;
+            }
+          }
+        }
+
+        .right-right {
+          width: 55%;
+          .contato {
+            .titulo {
+              font-size: 25px;
+            }
+            .dados {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -434,6 +491,52 @@ export default {
 
         .info {
           font-size: 22px;
+        }
+      }
+    }
+
+    .footer {
+      .footer-left {
+        #text_socials {
+          font-size: 13px;
+        }
+        .socials {
+          width: 70%;
+          .icons {
+            height: 33px;
+          }
+        }
+
+        .img-logo {
+          --alturaImg: 40px;
+        }
+      }
+
+      .footer-right {
+        .right-left {
+          .paginas {
+            .titulo {
+              font-size: 22px;
+            }
+
+            .box {
+              font-size: 15px;
+            }
+            p {
+              font-size: 14px;
+            }
+          }
+        }
+
+        .right-right {
+          .contato {
+            .titulo {
+              font-size: 22px;
+            }
+            .dados {
+              font-size: 15px;
+            }
+          }
         }
       }
     }
@@ -466,6 +569,113 @@ export default {
         }
         .inner {
           clip-path: polygon(5% 100%, 100% 20%, 100% 100%);
+        }
+      }
+    }
+
+    .footer {
+      height: 170px;
+      .footer-left {
+        #text_socials {
+          font-size: 9px;
+        }
+        .socials {
+          width: 70%;
+          .icons {
+            height: 26px;
+          }
+        }
+        .img-logo {
+          --alturaImg: 35px;
+          margin-bottom: 14px;
+        }
+      }
+
+      .footer-right {
+        .right-left {
+          .paginas {
+            .titulo {
+              font-size: 15px;
+            }
+
+            .box {
+              font-size: 12px;
+
+              li {
+                margin-bottom: 5px;
+              }
+            }
+            p {
+              margin-top: 40px;
+              font-size: 12px;
+            }
+          }
+        }
+
+        .right-right {
+          .contato {
+            .titulo {
+              font-size: 15px;
+            }
+            .dados {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .home {
+    .footer {
+      height: 150px;
+
+      .footer-left {
+        #text_socials {
+          font-size: 8px;
+        }
+        .socials {
+          width: 70%;
+          .icons {
+            height: 19px;
+          }
+        }
+
+        .img-logo {
+          --alturaImg: 25px;
+          margin-bottom: 14px;
+        }
+      }
+
+      .footer-right {
+        .right-left {
+          width: 30%;
+
+          .paginas {
+            .titulo {
+              font-size: 12px;
+            }
+            p {
+              font-size: 8px;
+            }
+            .box {
+              font-size: 9px;
+            }
+          }
+        }
+
+        .right-right {
+          width: 70%;
+          .contato {
+            .titulo {
+              font-size: 12px;
+            }
+            .dados {
+              font-size: 9px;
+            }
+          }
         }
       }
     }
