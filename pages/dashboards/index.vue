@@ -66,7 +66,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -227,15 +226,17 @@ export default {
     dropdownData: async function () {
       // this.stackDataValues();
       //  coletando turmas
-      await this.$axios.get("http://localhost:8000/api/v1/Turma/").then((dados) => {
-        dados.data.forEach(async (element) => {
-          await this.turmas.push({
-            name: element.nome,
-            alunos: element.totalAlunos,
-            id: element.id,
+      await this.$axios
+        .get("http://localhost:8000/api/v1/Turma/")
+        .then((dados) => {
+          dados.data.forEach(async (element) => {
+            await this.turmas.push({
+              name: element.nome,
+              alunos: element.totalAlunos,
+              id: element.id,
+            });
           });
         });
-      });
     },
     gerarPDF() {
       let doc = window.open("", "", "width=800, height=600");
@@ -514,60 +515,62 @@ export default {
         };
 
         // this.stackedData.datasets[0].data = [];
-        await this.$axios.get("http://localhost:8000/api/v1/Forms/").then((dados) => {
-          this.formsTurma = 0;
-          this.satsOtima = 0;
-          this.satsBoa = 0;
-          this.satsRegular = 0;
-          this.satsRuim = 0;
+        await this.$axios
+          .get("http://localhost:8000/api/v1/Forms/")
+          .then((dados) => {
+            this.formsTurma = 0;
+            this.satsOtima = 0;
+            this.satsBoa = 0;
+            this.satsRegular = 0;
+            this.satsRuim = 0;
 
-          //create and reset dataSet of bar chart
-          let dataSet = [[], [], []];
-          for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 13; j++) {
-              dataSet[i][j] = 0;
-            }
-          }
-
-          // GET dos formulários preenchidos
-          dados.data.forEach((form) => {
-            if (form.id_turma == this.selectedTurma["id"]) {
-              this.formsTurma = this.formsTurma + 1;
-
-              switch (form.id_satisfacao) {
-                case 1:
-                  this.satsOtima = this.satsOtima + 1;
-                  break;
-                case 2:
-                  this.satsBoa = this.satsBoa + 1;
-                  break;
-                case 3:
-                  this.satsRegular = this.satsRegular + 1;
-                  break;
-                case 4:
-                  this.satsRuim = this.satsRuim + 1;
-                  break;
+            //create and reset dataSet of bar chart
+            let dataSet = [[], [], []];
+            for (let i = 0; i < 3; i++) {
+              for (let j = 0; j < 13; j++) {
+                dataSet[i][j] = 0;
               }
-
-              dataSet[form.id_importancia - 1][form.id_pergunta - 1] += 1;
             }
+
+            // GET dos formulários preenchidos
+            dados.data.forEach((form) => {
+              if (form.id_turma == this.selectedTurma["id"]) {
+                this.formsTurma = this.formsTurma + 1;
+
+                switch (form.id_satisfacao) {
+                  case 1:
+                    this.satsOtima = this.satsOtima + 1;
+                    break;
+                  case 2:
+                    this.satsBoa = this.satsBoa + 1;
+                    break;
+                  case 3:
+                    this.satsRegular = this.satsRegular + 1;
+                    break;
+                  case 4:
+                    this.satsRuim = this.satsRuim + 1;
+                    break;
+                }
+
+                dataSet[form.id_importancia - 1][form.id_pergunta - 1] += 1;
+              }
+            });
+
+            this.changeStackDataValues(dataSet);
+            console.log(dataSet);
+
+            newPieChart.datasets[0].data[0] = this.satsOtima;
+            newPieChart.datasets[0].data[1] = this.satsBoa;
+            newPieChart.datasets[0].data[2] = this.satsRegular;
+            newPieChart.datasets[0].data[3] = this.satsRuim;
+
+            this.totalForms =
+              parseInt(
+                ((this.formsTurma / 13) * 100) / this.selectedTurma["alunos"]
+              ) + "%";
+
+            this.pieData = newPieChart;
           });
-
-          this.changeStackDataValues(dataSet);
-          console.log(dataSet);
-
-          newPieChart.datasets[0].data[0] = this.satsOtima;
-          newPieChart.datasets[0].data[1] = this.satsBoa;
-          newPieChart.datasets[0].data[2] = this.satsRegular;
-          newPieChart.datasets[0].data[3] = this.satsRuim;
-
-          this.totalForms =
-            parseInt(
-              ((this.formsTurma / 13) * 100) / this.selectedTurma["alunos"]
-            ) + "%";
-
-          this.pieData = newPieChart;
-        });
 
         // await this.$axios
         //   .get("http://127.0.0.1:8000/api/v1/ImportAlta/")
@@ -606,6 +609,8 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  overflow-x: visible;
+
   a {
     width: auto;
     i:hover {
@@ -613,6 +618,7 @@ body {
     }
   }
   .drop {
+    overflow-x: visible;
     max-width: 600px;
     box-shadow: none;
     border-color: none;
