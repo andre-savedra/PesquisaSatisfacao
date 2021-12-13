@@ -4,12 +4,23 @@ from .serializers import Formularioserializer, Importanciaserializer, Satisfacao
 from .models import Aluno, Perguntas, Satisfacao, Importancia, Formulario, Envio
 from rest_framework import viewsets
 
+from rest_framework.response import Response
+from rest_framework import status
+
 turma = '2DES'
 
 def getTurma(request, xturma):
     turma = xturma
     return request
 # http://127.0.0.1:8000/passTurma/2DES
+
+
+# def postFormulario(self, request):
+#     serializer_class = Formularioserializer(data=request.data)
+#     serializer_class.is_valid(raise_exception=True)
+#     serializer_class.save()
+#     return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+
 
 class FormularioApi(viewsets.ModelViewSet):
     queryset = Formulario.objects.all()

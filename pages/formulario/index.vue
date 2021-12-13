@@ -7,11 +7,12 @@
 
       <div
         class="form"
+        :v-if="questions"
         v-for="(question, index) in this.questions"
         :key="index"
       >
         <div class="titulo1">
-          <h1>{{ index + 1 }}. {{ question.topic }}</h1>
+          <h1>{{ index + 1 }}. {{ question.pergunta }}</h1>
         </div>
         <main class="pergunta1 p-d-flex p-flex-row p-jc-left p-ai-center">
           <section class="right-1">
@@ -33,7 +34,10 @@
                   <input
                     type="radio"
                     :id="'import-one-' + index"
-                    :value="'import-one-' + index"
+                    :name="'import-' + index"
+                    value="1"
+                    :v-if="responses"
+                    v-model="responses[index].id_importancia"
                   />
                   <label :for="'import-one-' + index">Alta</label>
                 </div>
@@ -46,8 +50,12 @@
                   <input
                     type="radio"
                     :id="'import-two-' + index"
-                    :value="'import-two-' + index"
+                    :name="'import-' + index"
+                    value="2"
+                    :v-if="responses"
+                    v-model="responses[index].id_importancia"
                   />
+
                   <label :for="'import-two-' + index">Media</label>
                 </div>
                 <div
@@ -59,8 +67,12 @@
                   <input
                     type="radio"
                     :id="'import-three-' + index"
-                    :value="'import-three-' + index"
+                    :name="'import-' + index"
+                    value="3"
+                    :v-if="responses"
+                    v-model="responses[index].id_importancia"
                   />
+
                   <label :for="'import-three-' + index">Baixa</label>
                 </div>
               </div>
@@ -84,7 +96,10 @@
                     <input
                       type="radio"
                       :id="'satisf-one-' + index"
-                      :value="'satisf-one-' + index"
+                      :name="'satisf-' + index"
+                      value="1"
+                      :v-if="responses"
+                      v-model="responses[index].id_satisfacao"
                     />
                     <label :for="'satisf-one-' + index">Otimo</label>
                   </div>
@@ -98,7 +113,10 @@
                     <input
                       type="radio"
                       :id="'satisf-two-' + index"
-                      :value="'satisf-two-' + index"
+                      :name="'satisf-' + index"
+                      value="2"
+                      :v-if="responses"
+                      v-model="responses[index].id_satisfacao"
                     />
                     <label :for="'satisf-two-' + index">Bom</label>
                   </div>
@@ -112,7 +130,10 @@
                     <input
                       type="radio"
                       :id="'satisf-three-' + index"
-                      :value="'satisf-three-' + index"
+                      :name="'satisf-' + index"
+                      value="5"
+                      :v-if="responses"
+                      v-model="responses[index].id_satisfacao"
                     />
                     <label :for="'satisf-three-' + index">Não se aplica</label>
                   </div>
@@ -128,7 +149,10 @@
                     <input
                       type="radio"
                       :id="'satisf-four-' + index"
-                      :value="'satisf-four-' + index"
+                      :name="'satisf-' + index"
+                      value="3"
+                      :v-if="responses"
+                      v-model="responses[index].id_satisfacao"
                     />
                     <label :for="'satisf-four-' + index">Regular</label>
                   </div>
@@ -142,8 +166,12 @@
                     <input
                       type="radio"
                       :id="'satisf-five-' + index"
-                      :value="'satisf-five-' + index"
+                      :name="'satisf-' + index"
+                      value="4"
+                      :v-if="responses"
+                      v-model="responses[index].id_satisfacao"
                     />
+
                     <label :for="'satisf-five-' + index">Ruim</label>
                   </div>
                 </div>
@@ -158,9 +186,18 @@
     </div>
 
     <div class="buttons p-d-flex p-flex-row p-jc-evenly p-ai-center">
-      <button type="button" class="btn-send">Enviar</button>
-      <button type="button" class="btn-clean">Limpar</button>
+      <Button class="btn-send" label="Enviar" @click="sendForm()" />
+      <Button class="btn-clean" label="Limpar" @click="cleanForm()" />
     </div>
+
+    <!-- <transition-group name="p-messages" tag="div">
+      <Message
+        :v-show="messages"
+        :severity="messages.severity"
+        :key="messages.content"
+        >{{ messages.content }}</Message
+      >
+    </transition-group> -->
   </div>
 </template>
 
@@ -170,36 +207,100 @@ export default {
   layout: "default",
   data() {
     return {
-      questions: [
-        { topic: "Limpeza e conservação da sala de aula e da oficina" },
-        {
-          topic:
-            "Disponibilidade de equipamentos, máquinas e ferramentas para a realização do curso",
-        },
-        {
-          topic:
-            "Qualidade de apostilas, livros e textos, quanto a impressão e a adequação da informação",
-        },
-        { topic: "Cumprimento do horário das aulas" },
-        { topic: "Cumprimento dos objetivos propostos pelo curso" },
-        { topic: "Preocupação do docente com o aproveitamento dos alunos" },
-        { topic: "Domínio do docente sobre os assuntos tratados" },
-        {
-          topic:
-            "O aprendizado, na teoria e na prática, em relação ao esperado",
-        },
-        { topic: "Conteúdo do curso, em relação às expectativas" },
-        { topic: "Atendimento da recepção / secretaria da escola" },
-        { topic: "Atendimento telefônico da escola" },
-        { topic: "Atendimento da cantina / lanchonete" },
-        { topic: "Atendimento da Biblioteca" },
-      ],
+      messages: {},
+      questions: null,
+      responses: [],
+      form: {
+        feedback: "",
+        id_aluno: 13,
+        id_turma: 2,
+        id_pergunta: 0,
+        id_satisfacao: 0,
+        id_importancia: 0,
+        semestre: 1,
+      },
     };
   },
   methods: {
+    addMessage() {
+      this.messages =
+        //[
+        // {severity: 'info', content: 'Dynamic Info Message'},
+        { severity: "success", content: "Dynamic Success Message" };
+      // {severity: 'warn', content: 'Dynamic Warning Message'}
+      // ]
+    },
     printer(element) {
       console.log(element);
     },
+    cleanResponses() {
+      for (let i = 0; i < this.questions.length; i++) {
+        this.responses.push(JSON.parse(JSON.stringify(this.form)));
+        this.responses[i].id_pergunta = i + 1;
+      }
+    },
+    sendPost: async function (body) {
+      console.log("strinfy",  JSON.stringify(body));
+      this.$axios
+        .$post("http://localhost:8000/api/v1/Formulario/", JSON.stringify(body),
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }          
+        })
+        .then((response) => {
+          console.log(response)
+          if (response != null) return true;
+          else return false;
+        });
+    },
+    sendForm: async function () {
+      console.log("FOMRULARIO:", this.responses);      
+      let status = false;   
+
+      for await (let response of this.responses)
+      {
+        console.log(response);
+        let result = await this.sendPost(response);       
+      }
+      
+      // for (let i = 0; i < this.responses.length; i++) {
+      //   let result = await this.sendPost(this.responses[i]);
+      //   // if (!result) {
+      //   //   status = true;
+      //   //   console.log("ERROO AO CADASTRAR");
+      //   // }
+      // }
+
+      if(status)
+      {
+
+      }
+      else
+      {
+        this.$router.push("respondido");
+      }
+
+      this.cleanForm();      
+    },
+    cleanForm() {
+      this.responses.forEach((response) => {
+        response.feedback = "";
+        response.id_turma = 0;
+        response.id_satisfacao = 0;
+        response.id_importancia = 0;
+      });
+    },
+  },
+  mounted() {
+    this.$axios
+      .$get("http://localhost:8000/api/v1/Pergunta")
+      .then((response) => {
+        this.questions = response;
+        this.cleanResponses();
+        console.log("questions:", this.questions);
+        console.log("responses:", this.responses);
+      });
   },
 };
 </script>
@@ -398,7 +499,7 @@ export default {
 
 @media screen and (max-width: 615px) {
   .all {
-      padding: 40px 0;
+    padding: 40px 0;
 
     .ruim {
       width: 120px !important;
