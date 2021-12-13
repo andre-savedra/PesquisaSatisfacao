@@ -1,0 +1,139 @@
+<!-- HTML BASE -->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Campo de Assinatura NOVO</title>
+</head>
+
+<body id="topo">
+
+    <div id="campo-canvas">
+        <div class="btnsCanvas">
+            <button class="btnLimpar" onclick="limpa()">Limpar</button>
+            <button class="btnSave" onclick="putImage()">Save as Image</button>
+        </div>
+    </div>
+
+</body>
+
+<!-- STYLE CANVAS -->
+<style type="text/css">
+    /* html {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+    }
+    
+    html>body {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+    } */
+    /* #topo>#campo-canvas {
+        background-color: #ffd68a;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    } */
+    /* #topo>#campo-canvas>#quadro {
+        width: 100%;
+        height: 100%;
+    } */
+    
+    .btnsCanvas {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .btnSave {
+        width: 50%;
+    }
+    
+    .btnLimpar {
+        width: 50%;
+    }
+</style>
+
+
+
+<!-- CANVAS JS -->
+<script>
+    window.onload = function() {
+        plotCanvas('quadro')
+    }
+
+    function limpa() {
+        var d = document.getElementById("campo-canvas");
+        var d_interno = document.getElementById("quadro");
+        var noRemovido = d.removeChild(d_interno);
+        plotCanvas('quadro')
+    }
+
+    function plotCanvas(el) {
+
+        var quadro = document.createElement('canvas');
+        quadro.id = el;
+        quadro.style.backgroundColor = "beige"
+        quadro.style.width = "500px"
+        quadro.style.height = "500px"
+        item = document.getElementById('campo-canvas')
+        item.appendChild(quadro);
+        var largura = "500";
+        var altura = "500";
+
+
+        var quadro = document.getElementById(el);
+
+        quadro.setAttribute("width", largura);
+        quadro.setAttribute("height", altura);
+
+        var ctx = quadro.getContext("2d");
+        console.log("ctx", ctx)
+        var left = quadro.offsetLeft;
+        var top = quadro.offsetTop;
+
+        ctx.fillStyle = "black"
+
+        var desenhando = false;
+
+        quadro.onmousedown = function(evt) {
+            console.log("left", left, "top", top)
+            console.log("evt.clientX", evt.clientX, "evt.clientY", evt.clientY)
+            ctx.moveTo(evt.clientX - left, evt.clientY - top);
+
+            desenhando = true;
+        }
+        quadro.onmouseup = function() {
+            desenhando = false;
+        }
+        quadro.onmousemove = function(evt) {
+            if (desenhando) {
+                ctx.lineTo(evt.clientX - left, evt.clientY - top);
+                ctx.stroke();
+            }
+        }
+    }
+
+
+    function putImage() {
+        var canvas = document.getElementById("quadro");
+
+        canvas.setAttribute('download', 'ass.png');
+        canvas.click();
+
+        var image = canvas.toDataURL("image/png");
+        const link = document.createElement('a')
+
+        link.href = image
+        link.download = 'assinatura'
+
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+</script>
+
+</html>

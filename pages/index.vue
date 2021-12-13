@@ -121,7 +121,7 @@
 
 export default {
   name: "Home",
-  layout: "default",
+  
 
   mounted() {
     function imgResizer() {
