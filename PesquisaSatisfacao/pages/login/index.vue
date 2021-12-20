@@ -1,7 +1,9 @@
 <template>
-  <main class="Cadastro">
-    <section class="logo_panel">
+  <main class="Cadastro p-d-flex p-flex-row p-jc-center p-ai-center">
+    <section class="logo_panel p-d-flex p-flex-column p-jc-center p-ai-center p-text-center">
       <img src="../../assets/media/suga.png" />
+      <h5>Sistema Unico de Gestão De Aluno</h5>
+      
     </section>
     <section class="Cadastro_panel">
       <div class="formulario_cadastro">
@@ -27,6 +29,7 @@
 
 <script>
 export default {
+  layout:"login",
   data() {
     return {
       login: [],
@@ -67,9 +70,7 @@ export default {
 
 .Cadastro {
   height: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
+  width: 100%;  
 }
 
 .Cadastro_panel {
@@ -84,21 +85,19 @@ export default {
 
 .logo_panel {
   height: 100vh;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 50%;  
   background-color: #313131;
   color: white;
 }
 
-img {
+img{
   margin-top: 0px;
   align-items: center;
   display: flex;
-  width: 700px;
-  height: 450px;
+  width: 70%;  
+  height: 45%;
+  // min-width: 150px;  
+  // min-height: 150px;
 }
 
 .formulario_cadastro .btn_enviar {
@@ -149,5 +148,42 @@ img {
 #senha:valid {
   outline: 0;
   border-color: crimson;
+}
+
+@media screen and (max-width: 510px) {
+    img {
+    display: none;
+    }
+
+    h5 {
+    display: none;
+    }
+
+    .logo_panel{
+      display: none;
+       width: 0%;
+    }
+
+    .Cadastro_panel{
+      width: 500px;
+    }
+}
+@media screen and (max-width: 510px) {
+    img {
+    display: none;
+    }
+
+    h5 {
+    display: none;
+    }
+
+    .logo_panel{
+      display: none;
+       width: 0%;
+    }
+
+    .Cadastro_panel{
+      width: 500px;
+    }
 }
 </style>
