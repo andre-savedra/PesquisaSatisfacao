@@ -100,12 +100,27 @@ WSGI_APPLICATION = 'satisfacao.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+'''
+'''
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': str(BASE_DIR / 'db.sql'),
+            'USER': 'admin',
+            'PASSWORD': 'lab1067243',
+            'HOST': 'database-projetos2des.cm7c2kbqcgmi.us-east-1.rds.amazonaws.com',
+            'PORT': '3306',
+        }
+    }
+    
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 
 
 # Password validation
