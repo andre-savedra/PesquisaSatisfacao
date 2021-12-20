@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'satisfacao.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': str(BASE_DIR / 'db.sql'),
+            'NAME': 'senai',
             'USER': 'admin',
             'PASSWORD': 'lab1067243',
             'HOST': 'database-projetos2des.cm7c2kbqcgmi.us-east-1.rds.amazonaws.com',
