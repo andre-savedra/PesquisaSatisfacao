@@ -31,15 +31,17 @@
                     p-d-flex p-flex-row p-jc-left p-ai-center
                   "
                 >
-                  <input
-                    type="radio"
-                    :id="'import-one-' + index"
-                    :name="'import-' + index"
-                    value="1"
-                    :v-if="responses"
-                    v-model="responses[index].id_importancia"
-                  />
-                  <label :for="'import-one-' + index">Alta</label>
+                  <div class="p-field-radiobutton">
+                    <RadioButton
+                      :id="'import-one-' + index"
+                      :name="'import-' + index"
+                      value="1"
+                      :v-if="responses"
+                      v-model="responses[index].id_importancia"
+                      style="color: #ff0000;"
+                    />
+                    <label :for="'import-one-' + index">Alta</label>
+                  </div>
                 </div>
                 <div
                   class="
@@ -47,16 +49,16 @@
                     p-d-flex p-flex-row p-jc-left p-ai-center
                   "
                 >
-                  <input
-                    type="radio"
-                    :id="'import-two-' + index"
-                    :name="'import-' + index"
-                    value="2"
-                    :v-if="responses"
-                    v-model="responses[index].id_importancia"
-                  />
-
-                  <label :for="'import-two-' + index">Media</label>
+                  <div class="p-field-radiobutton">
+                    <RadioButton
+                      :id="'import-two-' + index"
+                      :name="'import-' + index"
+                      value="2"
+                      :v-if="responses"
+                      v-model="responses[index].id_importancia"
+                    />
+                    <label :for="'import-two-' + index">Media</label>
+                  </div>
                 </div>
                 <div
                   class="
@@ -64,16 +66,16 @@
                     p-d-flex p-flex-row p-jc-left p-ai-center
                   "
                 >
-                  <input
-                    type="radio"
-                    :id="'import-three-' + index"
-                    :name="'import-' + index"
-                    value="3"
-                    :v-if="responses"
-                    v-model="responses[index].id_importancia"
-                  />
-
-                  <label :for="'import-three-' + index">Baixa</label>
+                  <div class="p-field-radiobutton">
+                    <RadioButton
+                      :id="'import-three-' + index"
+                      :name="'import-' + index"
+                      value="3"
+                      :v-if="responses"
+                      v-model="responses[index].id_importancia"
+                    />
+                    <label :for="'import-three-' + index">Baixa</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -93,15 +95,16 @@
                       p-d-flex p-flex-row p-jc-left p-ai-center
                     "
                   >
-                    <input
-                      type="radio"
-                      :id="'satisf-one-' + index"
-                      :name="'satisf-' + index"
-                      value="1"
-                      :v-if="responses"
-                      v-model="responses[index].id_satisfacao"
-                    />
-                    <label :for="'satisf-one-' + index">Otimo</label>
+                    <div class="p-field-radiobutton">
+                      <RadioButton
+                        :id="'satisf-one-' + index"
+                        :name="'satisf-' + index"
+                        value="1"
+                        :v-if="responses"
+                        v-model="responses[index].id_satisfacao"
+                      />
+                      <label :for="'satisf-one-' + index">Otimo</label>
+                    </div>
                   </div>
 
                   <div
@@ -110,15 +113,16 @@
                       p-d-flex p-flex-row p-jc-left p-ai-center
                     "
                   >
-                    <input
-                      type="radio"
-                      :id="'satisf-two-' + index"
-                      :name="'satisf-' + index"
-                      value="2"
-                      :v-if="responses"
-                      v-model="responses[index].id_satisfacao"
-                    />
-                    <label :for="'satisf-two-' + index">Bom</label>
+                    <div class="p-field-radiobutton">
+                      <RadioButton
+                        :id="'satisf-two-' + index"
+                        :name="'satisf-' + index"
+                        value="2"
+                        :v-if="responses"
+                        v-model="responses[index].id_satisfacao"
+                      />
+                      <label :for="'satisf-two-' + index">Bom</label>
+                    </div>
                   </div>
 
                   <div
@@ -127,15 +131,18 @@
                       p-d-flex p-flex-row p-jc-left p-ai-center
                     "
                   >
-                    <input
-                      type="radio"
-                      :id="'satisf-three-' + index"
-                      :name="'satisf-' + index"
-                      value="5"
-                      :v-if="responses"
-                      v-model="responses[index].id_satisfacao"
-                    />
-                    <label :for="'satisf-three-' + index">Não se aplica</label>
+                    <div class="p-field-radiobutton">
+                      <RadioButton
+                        :id="'satisf-three-' + index"
+                        :name="'satisf-' + index"
+                        value="5"
+                        :v-if="responses"
+                        v-model="responses[index].id_satisfacao"
+                      />
+                      <label :for="'satisf-three-' + index"
+                        >Não se aplica</label
+                      >
+                    </div>
                   </div>
                 </div>
 
@@ -146,15 +153,16 @@
                       p-d-flex p-flex-row p-jc-left p-ai-center
                     "
                   >
-                    <input
-                      type="radio"
-                      :id="'satisf-four-' + index"
-                      :name="'satisf-' + index"
-                      value="3"
-                      :v-if="responses"
-                      v-model="responses[index].id_satisfacao"
-                    />
-                    <label :for="'satisf-four-' + index">Regular</label>
+                    <div class="p-field-radiobutton">
+                      <RadioButton
+                        :id="'satisf-four-' + index"
+                        :name="'satisf-' + index"
+                        value="3"
+                        :v-if="responses"
+                        v-model="responses[index].id_satisfacao"
+                      />
+                      <label :for="'satisf-four-' + index">Regular</label>
+                    </div>
                   </div>
 
                   <div
@@ -163,16 +171,16 @@
                       p-d-flex p-flex-row p-jc-left p-ai-center
                     "
                   >
-                    <input
-                      type="radio"
-                      :id="'satisf-five-' + index"
-                      :name="'satisf-' + index"
-                      value="4"
-                      :v-if="responses"
-                      v-model="responses[index].id_satisfacao"
-                    />
-
-                    <label :for="'satisf-five-' + index">Ruim</label>
+                    <div class="p-field-radiobutton">
+                      <RadioButton
+                        :id="'satisf-five-' + index"
+                        :name="'satisf-' + index"
+                        value="4"
+                        :v-if="responses"
+                        v-model="responses[index].id_satisfacao"
+                      />
+                      <label :for="'satisf-five-' + index">Ruim</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -312,6 +320,9 @@ export default {
 
 <style lang="scss" scoped>
 .all {
+  * {
+    overflow: hidden;
+  }
   height: auto;
   width: 100vw;
   max-width: 100vw;
@@ -339,6 +350,9 @@ export default {
   .rbt_importancia,
   .rbt_satis {
     font-size: $size-question;
+    input {
+      background-color: #c22a1f;
+    }
   }
 
   .container {
@@ -365,6 +379,7 @@ export default {
       .pergunta1 {
         height: auto;
         width: 100%;
+        padding: 20px 0;
 
         .right-1 {
           height: 170px;
@@ -386,11 +401,8 @@ export default {
               .container-item {
                 label {
                   margin-top: 10px;
-                  width: 70px;
-                }
-                input {
-                  margin-top: 10px;
-                  width: 25px;
+                  width: auto;
+                  height: 20px;
                 }
               }
             }
@@ -419,9 +431,10 @@ export default {
 
                 .container-item {
                   label {
-                    margin-top: 10px;
-                    width: 100px;
-                  }
+                  margin-top: 10px;
+                  width: auto;
+                  height: 20px;
+                }
                   input {
                     margin-top: 10px;
                     width: 25px;
@@ -512,22 +525,23 @@ export default {
       font-size: $size-question;
     }
 
-    .container, .buttons {
+    .container,
+    .buttons {
       // height: 90%;
       width: 85vw;
     }
 
-    .pergunta1{
+    .pergunta1 {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
 
-      section{
+      section {
         height: auto !important;
         padding: 20px 0;
       }
 
-      .pg1{
+      .pg1 {
         margin: 0 !important;
       }
     }
