@@ -108,7 +108,7 @@ export default {
           showButton: true,
           adminButton: false,
           showSidebar: false,
-          hasSidebar: true,
+          hasSidebar: false,
           // sideButtons: [
           //   {
           //     textLabel: "Início",
